@@ -19,15 +19,18 @@ class ReplyComment extends Model
         'comment_reply_id'
     ];
 
-    public function user():BelongsTo{
+    public function user(): BelongsTo
+    {
         return $this->belongsTo(User::class);
     }
 
-    public function comment():BelongsTo{
+    public function comment(): BelongsTo
+    {
         return $this->belongsTo(Comment::class);
     }
 
-    public function replyComment():BelongsTo{
+    public function replyComment(): BelongsTo
+    {
         return $this->belongsTo(Comment::class);
     }
 }
