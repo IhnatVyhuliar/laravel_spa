@@ -10,6 +10,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 
 use App\Models\ReplyComment;
 use App\Models\User;
+use App\Models\SavedComment;
 
 class Comment extends Model
 {
@@ -27,7 +28,7 @@ class Comment extends Model
     }
 
     public function savedComments(): HasMany{
-        return $this->hasMany(Comment::class);
+        return $this->hasMany(SavedComment::class);
     }
 
     public function replyComments(): HasMany{
