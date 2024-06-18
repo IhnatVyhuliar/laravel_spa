@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use App\Models\Comment;
 use App\Models\User;
+
 class SavedComment extends Model
 {
     use HasFactory;
