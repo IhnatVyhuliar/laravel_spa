@@ -23,15 +23,18 @@ class Comment extends Model
         'user_id'
     ];
 
-    public function user(): BelongsTo{
+    public function user(): BelongsTo
+    {
         return $this->belongsTo(User::class);
     }
 
-    public function savedComments(): HasMany{
+    public function savedComments(): HasMany
+    {
         return $this->hasMany(SavedComment::class);
     }
 
-    public function replyComments(): HasMany{
+    public function replyComments(): HasMany
+    {
         return $this->hasMany(ReplyComment::class);
     }
 }
