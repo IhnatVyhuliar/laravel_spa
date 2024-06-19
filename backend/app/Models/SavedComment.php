@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use App\Models\Comment;
 use App\Models\User;
+
 class SavedComment extends Model
 {
     use HasFactory;
@@ -16,11 +17,13 @@ class SavedComment extends Model
         'comment_id'
     ];
 
-    public function user():BelongsTo{
+    public function user(): BelongsTo
+    {
         return $this->belongsTo(User::class);
     }
 
-    public function comment():BelongsTo{
+    public function comment(): BelongsTo
+    {
         return $this->belongsTo(Comment::class);
     }
 }
