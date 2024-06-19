@@ -4,6 +4,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\User\UserController;
 use App\Http\Controllers\Comment\ShowCommentController;
+use App\Http\Controllers\Comment\StoreCommentController;
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -29,6 +30,8 @@ Route::name('v1.')->prefix('v1')->group(function () {
 
         Route::post('/comments/email', [ShowCommentController::class, 'sortByEmail']);
         Route::post('/comments/name', [ShowCommentController::class, 'sortByName']);
+
+        Route::post('/comment/add', [StoreCommentController::class, 'store'])->middleware("XSS");
         
     });
 
