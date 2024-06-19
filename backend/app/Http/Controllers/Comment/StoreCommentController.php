@@ -9,6 +9,8 @@ use App\Models\ReplyComment;
 use App\Http\Requests\StoreCommentRequest;
 use League\CommonMark\Extension\CommonMark\Node\Inline\Code;
 use App\Services\TagClosedService;
+use App\Models\SavedComment;
+use Illuminate\Support\Facades\Storage;
 
 class StoreCommentController extends Controller
 {
@@ -55,6 +57,26 @@ class StoreCommentController extends Controller
             }
         }
         return $comment;
+    }
+
+    public function addToSaved(Comment $comment, Request $request)
+    {   
+        $saved = SavedComment::create([
+            'user_id' => $request->user()->id,
+            'comment_id' => $comment->id
+        ]);
+
+        return $saved;
+    }
+
+    public function deleteMessage(Comment $comment, Request $request)
+    {
+        if($comment->user_id === $request->user()->id){
+            Storage::delete($comment->photo_file);
+            Storage::delete($comment->txt_file);
+
+            $comment->delete();
+        }
     }
 
     private function  checkTags(string $string): bool 

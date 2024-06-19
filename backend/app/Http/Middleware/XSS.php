@@ -20,7 +20,13 @@ class XSS
         $userInput = $request->comment_text;
        // echo json_encode($request->all());
         $allowedTags = '<a><code><i><strong>';
-
+        $allowedTags = ['<a>', '<i>', '<code>', '<strong>'];
+        $filteredString = strip_tags($userInput, implode('', $allowedTags));
+    
+        // Compare the filtered string with the original
+        if ($filteredString !== $userInput){
+            abort(403, "Tags not valid");
+        }
         $cleanedContent = strip_tags($userInput, $allowedTags);
 
         preg_match_all('#<([a-z]+)(?: .*)?(?<![/|/ ])>#iU', $cleanedContent, $result);
