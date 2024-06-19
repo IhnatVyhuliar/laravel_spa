@@ -3,6 +3,7 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\User\UserController;
+use App\Http\Controllers\Comment\ShowCommentController;
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -15,11 +16,24 @@ use App\Http\Controllers\User\UserController;
 */
 Route::name('v1.')->prefix('v1')->group(function () {
     Route::post('/login', [UserController::class, "submit"]);
-    Route::post('/login/verify', [UserController::class, "verify"]);
+    Route::post('/login/authorise', [UserController::class, "authorise"]);
+    
+
+    Route::middleware('auth:sanctum')->group(function () {
+
+        Route::get('/user', function (Request $request) {
+            return $request->user();
+        });
+        Route::get('/comments', [ShowCommentController::class, 'index']);
+        Route::post('/comments/reverse', [ShowCommentController::class, 'sortByDate']);
+
+        Route::post('/comments/email', [ShowCommentController::class, 'sortByEmail']);
+        Route::post('/comments/name', [ShowCommentController::class, 'sortByName']);
+        
+    });
+
+
 });
 
 
 
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
-});

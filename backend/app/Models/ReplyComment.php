@@ -31,6 +31,6 @@ class ReplyComment extends Model
 
     public function replyComment(): BelongsTo
     {
-        return $this->belongsTo(Comment::class);
+        return $this->belongsTo(Comment::class, 'comment_reply_id', 'comments.id');
     }
 }

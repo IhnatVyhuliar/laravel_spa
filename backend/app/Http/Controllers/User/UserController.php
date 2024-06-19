@@ -8,6 +8,7 @@ use App\Http\Requests\SubmitEmailRequest;
 use App\Models\User;
 use Illuminate\Support\Facades\Mail;
 use App\Mail\SendAuthentificationMail;
+use App\Http\Requests\AuthoriseLoginCodeRequest;
 
 class UserController extends Controller
 {
@@ -39,4 +40,25 @@ class UserController extends Controller
         return response()->json(['message' => "Notification sent"]);
 
     }    
+
+    public function authorise(AuthoriseLoginCodeRequest $request)
+    {
+        $user = User::whereRaw("email", $request->email)
+            ->where('login_code', $request->login_code)
+            ->first();
+        // return  $request->email;
+        if ($user)
+        {
+            $user->update([
+                'login_code' => null
+            ]);
+        
+            $token = $user->createToken($request->login_code)->plainTextToken;
+            return response()->json(['message'=> "Successfully authorised", 'token'=> $token]); 
+        }
+
+        return response()->json(['message'=> "Invalid verification code"], 401);
+    }
+    //2|ztXQPFH5KuHS3VX1szN5yuT8rgYCUdwdi3BddUKRf557502d
+
 }
