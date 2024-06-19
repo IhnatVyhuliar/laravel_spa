@@ -43,7 +43,7 @@ class UserController extends Controller
 
     public function authorise(AuthoriseLoginCodeRequest $request)
     {
-        $user = User::whereRaw("email", $request->email)
+        $user = User::where("email", $request->email)
             ->where('login_code', $request->login_code)
             ->first();
         // return  $request->email;
@@ -59,6 +59,6 @@ class UserController extends Controller
 
         return response()->json(['message'=> "Invalid verification code"], 401);
     }
-    //2|ztXQPFH5KuHS3VX1szN5yuT8rgYCUdwdi3BddUKRf557502d
-
+    
+    
 }
