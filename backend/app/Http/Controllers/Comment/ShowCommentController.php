@@ -17,7 +17,6 @@ class ShowCommentController extends Controller
 
     public function sortByEmail(SubmitEmailRequest $request): object
     {   
-        
         return app(CommentService::class)->sortByEmail($request->email);
     }
 
