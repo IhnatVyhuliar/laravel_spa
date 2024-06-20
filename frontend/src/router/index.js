@@ -18,5 +18,20 @@ const router = createRouter({
     }
   ]
 })
+const checkTokenAuthenticity = () => {
+  axios.get('http://127.0.0.1:8000/api/user', {
+    headers:{
+      Authorization: `Bearer ${localStorage.getItem('token')}`
+    }
+  })
+  .then((response) => {})
+  .catch((error)=> {
+    localStorage.removeItem('token');
+    router.push({
+      name: 'login'
+    })
+  })
+
+}
 
 export default router
